@@ -1,0 +1,16 @@
+{
+  "validActiveInvoices": 184985,
+  "validActiveCreditNotes": 0,
+  "totalInvoicedBillAmount": 32657932508.68,
+  "totalInvoicedTax": 5878427851.56,
+  "totalInvoicedGross": 38536360360.24,
+  "cumulativeGrossSale": 38536360360.24,
+  "totalContainers": 89245,
+  "totalMovements": 128450,
+  "totalJobOrders": 88361,
+  "units20ft": 6508,
+  "units40ft": 82734,
+  "totalTeus": 171976,
+  "totalCustomers": 674,
+  "totalTerminals": 39
+}

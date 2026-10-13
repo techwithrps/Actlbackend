@@ -1,0 +1,19 @@
+{
+  "name": "spj-backend",
+  "version": "1.0.0",
+  "description": "SPJ Cargo Dashboard Backend with Oracle SPJLIVE integration",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "compile:java": "javac -cp src/tools/oracle/ojdbc11.jar src/tools/oracle/OracleAnalyticsEngine.java src/tools/oracle/OracleWarehouseExporter.java",
+    "build": "javac -cp src/tools/oracle/ojdbc11.jar src/tools/oracle/OracleAnalyticsEngine.java src/tools/oracle/OracleWarehouseExporter.java"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "oracledb": "^7.0.1",
+    "xlsx": "^0.18.5"
+  }
+}
