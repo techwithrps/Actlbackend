@@ -166,7 +166,7 @@ public class OracleAnalyticsEngine {
         }
         String svc = (serviceTypeStr != null && !serviceTypeStr.equalsIgnoreCase("all") && !serviceTypeStr.equals("0")) ? serviceTypeStr : "ALL";
 
-        String call = "{call SPJLIVE.SP_PORTAL_LIVE_ANALYTICS(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String call = "{call ACTL.SP_PORTAL_LIVE_ANALYTICS(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         try (CallableStatement cs = conn.prepareCall(call)) {
             cs.setString(1, fromDate);
             cs.setString(2, toDate);
@@ -454,7 +454,7 @@ public class OracleAnalyticsEngine {
         StringBuilder custJson = new StringBuilder("[");
 
         // 1 & 2. Execute Stored Procedure for instant KPIs & Customer Aggregations (zero slow table scans)
-        String call = "{call SPJLIVE.SP_PORTAL_LIVE_ANALYTICS(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        String call = "{call ACTL.SP_PORTAL_LIVE_ANALYTICS(?, ?, ?, ?, ?, ?, ?, ?, ?)}";
         try (CallableStatement cs = conn.prepareCall(call)) {
             cs.setString(1, fromDate);
             cs.setString(2, toDate);
