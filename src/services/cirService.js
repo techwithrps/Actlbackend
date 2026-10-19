@@ -305,16 +305,17 @@ async function getMasters() {
 
   if (terminals.length === 0) {
     terminals = [
-      { id: 1, terminalId: 1, name: 'SPJ COLD STORAGE DADRI', terminalName: 'SPJ COLD STORAGE DADRI', code: 'SPJ-DDR', location: 'Dadri, UP', totalContainers: 49413, netRevenue: 49138247425.71, invoiceCount: 117140 },
-      { id: 31, terminalId: 31, name: 'SPJ CFS TERMINAL DADRI', terminalName: 'SPJ CFS TERMINAL DADRI', code: 'SPJ-CFS', location: 'Dadri, UP', totalContainers: 49413, netRevenue: 49138247425.71, invoiceCount: 117140 },
-      { id: 44, terminalId: 44, name: 'CHENNAI', terminalName: 'CHENNAI', code: 'CHN', location: 'Chennai, TN', totalContainers: 30, netRevenue: 17211888.92, invoiceCount: 14 },
-      { id: 34, terminalId: 34, name: 'HAZIRA', terminalName: 'HAZIRA', code: 'HAHAZIRA', location: 'Hazira, Gujarat', totalContainers: 122, netRevenue: 23993871.73, invoiceCount: 58 },
-      { id: 7, terminalId: 7, name: 'PIPAVAV', terminalName: 'PIPAVAV', code: 'DICT', location: 'Pipavav, Gujarat', totalContainers: 5875, netRevenue: 2356412561.06, invoiceCount: 9868 },
-      { id: 25, terminalId: 25, name: 'KANPUR-JRY', terminalName: 'KANPUR-JRY', code: 'ICDG', location: 'Kanpur, UP', totalContainers: 9854, netRevenue: 7077419751.3, invoiceCount: 18661 },
-      { id: 5, terminalId: 5, name: 'NHAVA SHEVA', terminalName: 'NHAVA SHEVA', code: 'JNPT', location: 'Nhava Sheva, MH', totalContainers: 11009, netRevenue: 5689164013.38, invoiceCount: 15681 },
-      { id: 42, terminalId: 42, name: 'KOLKATA', terminalName: 'KOLKATA', code: 'KOL', location: 'Kolkata, WB', totalContainers: 172, netRevenue: 133382127.5, invoiceCount: 377 },
-      { id: 2, terminalId: 2, name: 'SONIPAT', terminalName: 'SONIPAT', code: 'DICT', location: 'Sonipat, Haryana', totalContainers: 84, netRevenue: 3646648.74, invoiceCount: 14 },
-      { id: 38, terminalId: 38, name: 'SILIGURI', terminalName: 'SILIGURI', code: 'SLG', location: 'Siliguri, WB', totalContainers: 106, netRevenue: 212400.0, invoiceCount: 3 }
+      { id: 1, terminalId: 1, name: "ASSOCIATED CONTAINER TERMINALS LIMITED", terminalName: "ASSOCIATED CONTAINER TERMINALS LIMITED", code: "MATP", location: "Faridabad ICD, Haryana", totalContainers: 410634, netRevenue: 13857000000, invoiceCount: 273756 },
+      { id: 2, terminalId: 2, name: "ASSOCIATED CONTAINER TERMINALS LIMITED DELHI", terminalName: "ASSOCIATED CONTAINER TERMINALS LIMITED DELHI", code: "ACTL", location: "New Delhi", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 6, terminalId: 6, name: "R.R. JOSHI SHIPPING & FORWARDING PVT LTD", terminalName: "R.R. JOSHI SHIPPING & FORWARDING PVT LTD", code: "RRJ", location: "New Delhi", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 37, terminalId: 37, name: "JODHPUR ICD", terminalName: "JODHPUR ICD", code: "HPGH", location: "Jodhpur, Rajasthan", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 36, terminalId: 36, name: "ICD DADRI", terminalName: "ICD DADRI", code: "DADRI", location: "Dadri, UP", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 33, terminalId: 33, name: "KANPUR LOGISTICS PARK PVT.LTD", terminalName: "KANPUR LOGISTICS PARK PVT.LTD", code: "MKPP", location: "Kanpur, UP", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 5, terminalId: 5, name: "PATLI", terminalName: "PATLI", code: "PDLL", location: "Patli, Haryana", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 4, terminalId: 4, name: "KALAMBOLI", terminalName: "KALAMBOLI", code: "MILK", location: "Kalamboli, Maharashtra", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 3, terminalId: 3, name: "MUDRA", terminalName: "MUDRA", code: "MDCC", location: "Mundra, Gujarat", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 8, terminalId: 8, name: "JNPT", terminalName: "JNPT", code: "JNPT", location: "Nhava Sheva, Maharashtra", totalContainers: 0, netRevenue: 0, invoiceCount: 0 },
+      { id: 29, terminalId: 29, name: "PIPAVAV", terminalName: "PIPAVAV", code: "PIPAVAV", location: "Pipavav, Gujarat", totalContainers: 0, netRevenue: 0, invoiceCount: 0 }
     ];
   }
 
@@ -335,13 +336,13 @@ async function getMasters() {
   // 3. S.J. CARGO MOVERS (id: 1, SJ)
   // 4. PURAN JOSHI (id: 5, PJ)
   // 5. SPJ CARGO PVT LTD-MUMBAI (id: 4, SPJ-MUM)
-  const officialCompanies = [
-    { id: 3, companyId: 3, code: 'PJ-OLD', name: 'PURAN JOSHI OLD', gstin: '07ADGPJ3166M1ZA', director: 'Mr. Puran Joshi', city: 'NEW DELHI', state: 'DELHI' },
-    { id: 2, companyId: 2, code: 'SPJ', name: 'SPJ CARGO PVT LTD', gstin: '07AAOCS1758E1Z5', director: 'Mr. Puran Joshi', city: 'NEW DELHI', state: 'DELHI' },
-    { id: 1, companyId: 1, code: 'SJ', name: 'S.J. CARGO MOVERS', gstin: '07ADGPJ3166M1ZA', director: 'Mr. Puran Joshi', city: 'NEW DELHI', state: 'DELHI' },
-    { id: 5, companyId: 5, code: 'PJ', name: 'PURAN JOSHI', gstin: '07ADGPJ3166M2Z9', director: 'Mr. Puran Joshi', city: 'NEW DELHI', state: 'DELHI' },
-    { id: 4, companyId: 4, code: 'SPJ-MUM', name: 'SPJ CARGO PVT LTD-MUMBAI', gstin: '27AAOCS1758E1Z3', director: 'Mr. Puran Joshi', city: 'Mumbai', state: 'Maharashtra' }
-  ];
+  const officialCompanies = (compData && compData.companies && compData.companies.length > 0)
+    ? compData.companies
+    : [
+        { id: 1, companyId: 1, code: "ACTL", name: "ASSOCIATED CONTAINER TERMINALS LIMITED", gstin: "06AAACA4228K1ZV", director: "Management", city: "FARIDABAD", state: "HARYANA" },
+        { id: 2, companyId: 2, code: "ACTL", name: "ASSOCIATED CONTAINER TERMINALS LIMITED", gstin: "07AAACA4228K1ZT", director: "Management", city: "NEW DELHI", state: "DELHI" },
+        { id: 3, companyId: 3, code: "RRJ", name: "R.R. JOSHI SHIPPING & FORWARDING PVT LTD", gstin: "07AAACR2753G1ZJ", director: "Management", city: "NEW DELHI", state: "DELHI" }
+      ];
 
   // Build Comprehensive Customer-to-Terminal Matrix across Companies
   const customerTerminalMatrix = (() => {

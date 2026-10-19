@@ -144,7 +144,7 @@ public class OracleAnalyticsEngine {
             try { 
                 termId = Integer.parseInt(terminalIdStr); 
             } catch (Exception e) {
-                try (PreparedStatement pstmt = conn.prepareStatement("SELECT TERMINAL_ID FROM SPJLIVE.IMP_INVOICE WHERE LOWER(TERMINAL_NAME) LIKE ? AND ROWNUM <= 1")) {
+                try (PreparedStatement pstmt = conn.prepareStatement("SELECT TERMINAL_ID FROM ACTL.IMP_INVOICE WHERE LOWER(TERMINAL_NAME) LIKE ? AND ROWNUM <= 1")) {
                     pstmt.setString(1, "%" + terminalIdStr.toLowerCase().trim() + "%");
                     try (ResultSet rs = pstmt.executeQuery()) {
                         if (rs.next()) termId = rs.getInt(1);
@@ -156,7 +156,7 @@ public class OracleAnalyticsEngine {
             try { 
                 custId = Integer.parseInt(customerIdStr); 
             } catch (Exception e) {
-                try (PreparedStatement pstmt = conn.prepareStatement("SELECT CUSTOMER_ID FROM SPJLIVE.CUSTOMER_MASTER WHERE LOWER(CUSTOMER_NAME) LIKE ? AND ROWNUM <= 1")) {
+                try (PreparedStatement pstmt = conn.prepareStatement("SELECT CUSTOMER_ID FROM ACTL.CUSTOMER_MASTER WHERE LOWER(CUSTOMER_NAME) LIKE ? AND ROWNUM <= 1")) {
                     pstmt.setString(1, "%" + customerIdStr.toLowerCase().trim() + "%");
                     try (ResultSet rs = pstmt.executeQuery()) {
                         if (rs.next()) custId = rs.getInt(1);
@@ -795,10 +795,33 @@ public class OracleAnalyticsEngine {
     // MASTERS MODE
     // ============================================================
     private static void queryMasters(Connection conn, String terminalIdStr, long startTime) throws Exception {
+        StringBuilder compJson = new StringBuilder("[");
+        try (Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(
+                 "SELECT COMPANY_ID, COMPANY_CODE, COMPANY_NAME, ADDRESS, CITY, STATE, STATE_CODE, GSTIN FROM ACTL.COMPANY_MASTER ORDER BY COMPANY_ID")) {
+            boolean first = true;
+            while (rs.next()) {
+                if (!first) compJson.append(",");
+                first = false;
+                compJson.append(String.format(Locale.US,
+                    "{\"id\":%d,\"companyId\":%d,\"code\":\"%s\",\"name\":\"%s\",\"address\":\"%s\",\"city\":\"%s\",\"state\":\"%s\",\"gstin\":\"%s\"}",
+                    rs.getInt("COMPANY_ID"),
+                    rs.getInt("COMPANY_ID"),
+                    escapeJson(rs.getString("COMPANY_CODE")),
+                    escapeJson(rs.getString("COMPANY_NAME")),
+                    escapeJson(rs.getString("ADDRESS")),
+                    escapeJson(rs.getString("CITY")),
+                    rs.getString("STATE_CODE") != null && rs.getString("STATE_CODE").equals("06") ? "HARYANA" : "DELHI",
+                    escapeJson(rs.getString("GSTIN"))
+                ));
+            }
+        }
+        compJson.append("]");
+
         StringBuilder termJson = new StringBuilder("[");
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                 "SELECT TERMINAL_ID, TERMINAL_CODE, TERMINAL_NAME, ADDRESS, STATE_CODE FROM SPJLIVE.TERMINAL_MASTER ORDER BY TERMINAL_NAME")) {
+                 "SELECT TERMINAL_ID, TERMINAL_CODE, TERMINAL_NAME, ADDRESS, STATE_CODE FROM ACTL.TERMINAL_MASTER ORDER BY TERMINAL_NAME")) {
             boolean first = true;
             while (rs.next()) {
                 if (!first) termJson.append(",");
@@ -818,19 +841,20 @@ public class OracleAnalyticsEngine {
         StringBuilder custJson = new StringBuilder("[");
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                 "SELECT CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, CITY, STATE_CODE, STATUS FROM SPJLIVE.CUSTOMER_MASTER ORDER BY CUSTOMER_NAME")) {
+                 "SELECT CUSTOMER_ID, CUSTOMER_CODE, CUSTOMER_NAME, CITY, STATE, STATUS, GSTIN FROM ACTL.CUSTOMER_MASTER WHERE ROWNUM <= 3000 ORDER BY CUSTOMER_NAME")) {
             boolean first = true;
             while (rs.next()) {
                 if (!first) custJson.append(",");
                 first = false;
                 custJson.append(String.format(Locale.US,
-                    "{\"customerId\":%d,\"customerCode\":\"%s\",\"customerName\":\"%s\",\"city\":\"%s\",\"stateCode\":\"%s\",\"status\":\"%s\"}",
+                    "{\"customerId\":%d,\"customerCode\":\"%s\",\"customerName\":\"%s\",\"city\":\"%s\",\"state\":\"%s\",\"status\":\"%s\",\"gstin\":\"%s\"}",
                     rs.getInt("CUSTOMER_ID"),
                     escapeJson(rs.getString("CUSTOMER_CODE")),
                     escapeJson(rs.getString("CUSTOMER_NAME")),
                     escapeJson(rs.getString("CITY")),
-                    escapeJson(rs.getString("STATE_CODE")),
-                    escapeJson(rs.getString("STATUS"))
+                    escapeJson(rs.getString("STATE")),
+                    escapeJson(rs.getString("STATUS")),
+                    escapeJson(rs.getString("GSTIN"))
                 ));
             }
         }
@@ -839,7 +863,7 @@ public class OracleAnalyticsEngine {
         StringBuilder svcJson = new StringBuilder("[");
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(
-                 "SELECT SERVICE_ID, SERVICE_CODE, SERVICE_NAME, SERVICE_TYPE_CODE FROM SPJLIVE.SERVICE_MASTER ORDER BY SERVICE_NAME")) {
+                 "SELECT SERVICE_ID, SERVICE_CODE, SERVICE_NAME, SERVICE_TYPE_CODE FROM ACTL.SERVICE_MASTER WHERE ROWNUM <= 200 ORDER BY SERVICE_NAME")) {
             boolean first = true;
             while (rs.next()) {
                 if (!first) svcJson.append(",");
@@ -857,8 +881,8 @@ public class OracleAnalyticsEngine {
 
         long totalTime = System.currentTimeMillis() - startTime;
         System.out.printf(Locale.US,
-            "{\"success\":true,\"source\":\"ORACLE_SPJLIVE_MASTERS\",\"totalTimeMs\":%d,\"terminals\":%s,\"customers\":%s,\"services\":%s}\n",
-            totalTime, termJson.toString(), custJson.toString(), svcJson.toString());
+            "{\"success\":true,\"source\":\"ORACLE_ACTL_MASTERS\",\"totalTimeMs\":%d,\"companies\":%s,\"terminals\":%s,\"customers\":%s,\"services\":%s}\n",
+            totalTime, compJson.toString(), termJson.toString(), custJson.toString(), svcJson.toString());
     }
 
     private static String fmtDate(java.sql.Date d) {
