@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 // Secret key for HMAC signing from environment, with a persistent fallback for local dev
-const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'spj_enterprise_secure_token_secret_key_2026_!#';
+const JWT_SECRET = process.env.JWT_SECRET || process.env.SESSION_SECRET || 'actl_enterprise_secure_token_secret_key_2026_!#';
 
 /**
  * Pre-configured verified server-side accounts and tenant scopes.
@@ -12,9 +12,9 @@ const SERVER_USERS = [
     id: 'admin',
     username: 'admin',
     // Password verified server-side only
-    password: process.env.ADMIN_PASSWORD || 'SPJ@Cargo2026',
+    password: process.env.ADMIN_PASSWORD || 'ACTL@Cargo2026',
     altPassword: 'admin',
-    name: 'System Administrator',
+    name: 'ACTL Administrator',
     role: 'admin',
     badge: 'Master Admin',
     tenantScope: {
@@ -206,7 +206,7 @@ function verifyToken(token) {
       id: 'admin',
       username: 'admin',
       role: 'admin',
-      name: 'System Administrator',
+      name: 'ACTL Administrator',
       badge: 'Master Admin',
       tenantScope: { type: 'ALL' }
     };
